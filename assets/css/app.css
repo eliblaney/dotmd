@@ -1,0 +1,233 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+html,
+body {
+  background: #21252b;
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  --c:no-repeat linear-gradient(orange 0 0);
+  background: var(--c),var(--c),var(--c),var(--c);
+  background-size: 21px 21px;
+  animation: l5 1.5s infinite cubic-bezier(0.3,1,0,1);
+  transition: opacity 0.5s;
+  opacity: 0;
+  position: absolute;
+}
+@keyframes l5 {
+  0%   {background-position: 0    0,100% 0   ,100% 100%,0 100%}
+  33%  {background-position: 0    0,100% 0   ,100% 100%,0 100%;width:60px;height: 60px}
+  66%  {background-position: 100% 0,100% 100%,0    100%,0 0   ;width:60px;height: 60px}
+  100% {background-position: 100% 0,100% 100%,0    100%,0 0   }
+}
+
+.error {
+  opacity: 0;
+  transition: opacity 0.5s;
+
+  background: #ffaa66;
+  border-radius: 25px;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  z-index: 1;
+}
+
+.error h3 {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.error p {
+  padding-top: 20px;
+}
+
+#app {
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+#app.visible, .loader.visible, .error.visible, .newuser.visible {
+  opacity: 1;
+}
+
+#canvas {
+  margin: 20px;
+  /* border: 1px solid white; */
+}
+
+#dots-menu {
+  position: absolute;
+  top: 5vh;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: 50vw;
+  min-width: 550px;
+  max-width: 800px;
+
+  background-color: #ffffffaa;
+  height: 70px;
+  border: 4px solid #222;
+  border-radius: 50px;
+  
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+#dots-colors {
+  display: flex;
+}
+
+#dots-menu .dot-color {
+  width: 50px;
+  height: 50px;
+  border: 3px solid #676767;
+  border-radius: 1000px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+#dots-menu .dot-color.active {
+  border: 4px solid black;
+}
+
+.dot-color.red {
+  background-color: #ff0000;
+}
+
+.dot-color.green {
+  background-color: #008000;
+}
+
+.dot-color.blue {
+  background-color: #0000ff;
+}
+
+.dot-color.black {
+  background-color: #000000;
+}
+
+.dot-color.white {
+  background-color: #ffffff;
+}
+
+#dots-menu .dot-color.multi {
+  border-radius: 0;
+  background: linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+  position: relative;
+}
+
+#dots-menu .dot-color.multi.active {
+  border: 10px solid;
+  border-image-slice: 1;
+  border-image-width: 4px;
+  border-image-source: linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 1) 0%,
+        rgba(255, 154, 0, 1) 10%,
+        rgba(208, 222, 33, 1) 20%,
+        rgba(79, 220, 74, 1) 30%,
+        rgba(63, 218, 216, 1) 40%,
+        rgba(47, 201, 226, 1) 50%,
+        rgba(28, 127, 238, 1) 60%,
+        rgba(95, 21, 242, 1) 70%,
+        rgba(186, 12, 248, 1) 80%,
+        rgba(251, 7, 217, 1) 90%,
+        rgba(255, 0, 0, 1) 100%
+    );
+}
+
+.dot-color.multi input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.newuser {
+  opacity: 0;
+  transition: opacity 1s;
+
+  background: #33006f;
+  border-radius: 25px;
+  padding: 1.5em 2em;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: 1;
+
+  min-width: 300px;
+  min-height: 200px;
+
+  color: white;
+  font-size: 1.5em;
+}
+
+.newuser label {
+  margin-bottom: 0.25em;
+}
+
+.newuser button {
+  margin-top: 1em;
+  background-color: #;
+  border: 1px solid white;
+  padding: 10px;
+  border-radius: 30px;
+}
+
+#newuser_text {
+  width: 100%;
+  padding: 10px;
+  vertical-align: middle;
+  box-shadow: 0 0 0 transparent;
+  border: 1px solid #999;
+  outline: 0 none;
+  transition: box-shadow 0.5s;
+  color: black;
+  box-shadow: inherit;
+}
+
+#newuser_text.shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+  box-shadow: 0 0 0.5em red;
+}
+@keyframes shake {
+  0% { margin-left: 0rem; }
+  25% { margin-left: 0.5rem; }
+  75% { margin-left: -0.5rem; }
+  100% { margin-left: 0rem; }
+}
