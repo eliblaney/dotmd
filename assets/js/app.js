@@ -176,14 +176,15 @@ const startApp = function(notify) {
     ctx.fillStyle = '#21252b'
     ctx.fillRect(p1.x,p1.y,p2.x-p1.x,p2.y-p1.y);
 
-
     const padX = canvas.padX()
     const padY = canvas.padY()
+
+    /*
     const maxX = canvas.width - padX
     const maxY = canvas.height - padY
-
     const lineWidth = 10
     const linePadding = resSize * lineWidth / resSize / 2
+
     ctx.lineWidth = lineWidth
     ctx.beginPath()
     ctx.moveTo(padX - linePadding, padY - linePadding)
@@ -201,6 +202,7 @@ const startApp = function(notify) {
     ctx.moveTo(padX - linePadding, maxY + linePadding)
     ctx.lineTo(maxX + linePadding, maxY + linePadding)
     ctx.stroke()
+    */
 
     for(let y = 0; y < numY; y++) {
       for(let x = 0; x < numX; x++) {
@@ -425,7 +427,7 @@ const onDot = function(n, color) {
 error.style.display = 'none'
 channel.join()
   .receive("ok", resp => {
-    console.log('Joined successfully', resp)
+    console.log('Joined successfully')
     const dots = resp.dots
     const len = dots.length
     for(let i = 0; i < len; i++) {
