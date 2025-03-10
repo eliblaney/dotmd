@@ -1,5 +1,6 @@
 defmodule DotmdWeb.RoomChannel do
   use DotmdWeb, :channel
+  require Logger
 
   @impl true
   def join("room:lobby", payload, socket) do
@@ -13,13 +14,15 @@ defmodule DotmdWeb.RoomChannel do
 
   @impl true
   def handle_in("new_dot", payload, socket) do
-    Dotmd.Repo.insert(%Dotmd.Dot{
-      pos: payload["pos"],
-      color: payload["color"],
-      user: payload["user"]
-    })
-    broadcast(socket, "dot", payload)
-    {:noreply, socket}
+    dot = Dotmd.Dot.changeset(%Dotmd.Dot{}, payload)
+    case Dotmd.Repo.insert(dot) do
+      {:ok, _dot} ->
+        broadcast(socket, "dot", payload)
+        {:noreply, socket}
+      {:error, changeset} ->
+        Logger.warning "Received invalid dot: #{inspect(changeset)}"
+        {:reply, {:error, "Invalid dot"}, socket}
+    end
   end
 
   # Add authorization logic here as required.

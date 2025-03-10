@@ -14,7 +14,10 @@ defmodule Dotmd.Dot do
   @doc false
   def changeset(dot, attrs) do
     dot
-    |> cast(attrs, [:pos, :color])
+    |> cast(attrs, [:pos, :color, :user])
     |> validate_required([:pos, :color])
+    |> validate_inclusion(:pos, 0..70560)
+    |> validate_format(:color, ~r/^#[0-9A-Fa-f]{6}$/)
+    |> validate_format(:user, ~r/^[0-9A-Za-z]{1,20}$/)
   end
 end

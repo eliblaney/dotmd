@@ -274,8 +274,12 @@ const startApp = function(notify) {
       const y = Math.floor(dragStart.y / resSize)
       if(x >= 0 && y >= 0 && x < numX && y < numY) {
         const n = numX*y + x
+        const old = colors[n]
         colors[n] = { color: dotColor, user: user || 'Anonymous' }
-        notify(n, dotColor)
+        notify(n, dotColor, function() {
+          colors[n] = old
+          redraw()
+        })
         redraw()
       }
     }
@@ -420,8 +424,13 @@ channel.on('dot', payload => {
   window.redrawCanvas()
 })
 
-const onDot = function(n, color) {
-  channel.push('new_dot', {pos: n, color: color, user: user})
+const onDot = function(n, color, onError) {
+  channel
+    .push('new_dot', {pos: n, color: color, user: user})
+    .receive('error', (e) => {
+      console.log(`Error: ${e}`)
+      onError()
+  })
 }
 
 error.style.display = 'none'
